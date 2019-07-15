@@ -22,7 +22,7 @@ function App() {
         }
   ])
 
-  const [memberToEdit, setMemberToEdit] = useState('')
+  // const [memberToEdit, setMemberToEdit] = useState('')
 
   const addMember = (member) => {
     const newMember = [...teamMember, member]
@@ -30,7 +30,9 @@ function App() {
     
   }
 
-  
+  const memberToEdit = () => {
+    addTeamMember(teamMember)
+  }
 
 
   console.log("team member", teamMember)
@@ -48,7 +50,7 @@ function App() {
          
       })}
       
-      <Form addMember={addMember} />
+      <Form addMember={addMember} memberToEdit={memberToEdit}/>
     </div>
   );
 }

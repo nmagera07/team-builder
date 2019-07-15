@@ -6,7 +6,11 @@ const Form = (props) => {
         email: '',
         role: ''
     })
-    const [member, newMember] = useState('')
+    const [member, newMember] = useState({
+        name: '',
+        email: '',
+        role: ''
+    })
 
     const addMember = event => {
         event.preventDefault()
@@ -22,6 +26,10 @@ const Form = (props) => {
     const changeHandler = event => {
         setFormState({...formState, [event.target.name]: event.target.value })
     }
+
+    useEffect(() => {
+        props.memberToEdit(formState)
+    })
 
     return ( 
         <div>

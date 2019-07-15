@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import './App.css';
-import Form from './components/Form'
+import MemberForm from './components/Form'
+import 'semantic-ui-css/semantic.min.css'
+import { Card, Button} from 'semantic-ui-react'
 import MemberDisplayList from './components/MemberDisplayList'
 
 function App() {
@@ -22,7 +24,7 @@ function App() {
         }
   ])
 
-  // const [memberToEdit, setMemberToEdit] = useState('')
+  const [memberToEdit, setMemberToEdit] = useState('')
 
   const addMember = (member) => {
     const newMember = [...teamMember, member]
@@ -30,27 +32,33 @@ function App() {
     
   }
 
-  const memberToEdit = () => {
-    addTeamMember(teamMember)
-  }
+
 
 
   console.log("team member", teamMember)
   console.log("edit", memberToEdit)
   return (
     <div className="App">
-      <h1>Team Members</h1>
-      {teamMember.map(member => {
-         return <div>
-            <p>Name: {member.name}</p>
-            <p>Email: {member.email}</p>
-            <p>Role: {member.role}</p>
-            <button onClick={() => memberToEdit}>Edit Member</button>
-         </div>
-         
-      })}
       
-      <Form addMember={addMember} memberToEdit={memberToEdit}/>
+      <h1>Team Members</h1>
+      <div className="outer-div">{teamMember.map(member => {
+        return <div>
+           <div className="members">
+           <Card className="members-map">
+              <Card.Content>
+           <Card.Header><p>{member.name}</p></Card.Header>
+            <Card.Description>
+              <p>Email: {member.email}</p>
+              <p>Role: {member.role}</p>
+            </Card.Description>
+            </Card.Content>
+            <Button onClick={() => setMemberToEdit(memberToEdit)}>Edit Member</Button>
+            </Card>
+            </div>
+        </div>
+      })}</div>
+      
+      <MemberForm addMember={addMember} memberToEdit={setMemberToEdit}/>
     </div>
   );
 }

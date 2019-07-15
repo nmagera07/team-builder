@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
+import { Form, Button } from 'semantic-ui-react'
 
-const Form = (props) => {
+const MemberForm = (props) => {
     const [formState, setFormState] = useState({
         name: '',
         email: '',
@@ -29,49 +30,57 @@ const Form = (props) => {
 
     useEffect(() => {
         props.memberToEdit(formState)
-    })
+    }, [])
+
+    console.log("member", props.memberToEdit)
 
     return ( 
-        <div>
+        <div className="form-div">
             
-            <form onSubmit={addMember}>
+            <Form onSubmit={addMember} size="large">
+                <Form.Field width="3">
                 <label>
                     Name: 
-                    <input 
+                    <Form.Input 
                         type="text" 
                         name="name" 
                         placeholder="name"
                         value={formState.name}
                         onChange={changeHandler}
                         >
-                    </input>
+                    </Form.Input>
                 </label>
+                </Form.Field>
+                <Form.Field width="3">
                 <label>
                     Email: 
-                    <input 
+                    <Form.Input 
                         type="email" 
                         name="email" 
                         placeholder="email"
                         value={formState.email}
                         onChange={changeHandler}
                         >
-                    </input>
+                    </Form.Input>
                 </label>
+                </Form.Field>
+                <Form.Field width="3">
                 <label>
                     Role: 
-                    <input 
+                    <Form.Input 
                         type="text" 
                         name="role" 
                         placeholder="role"
                         value={formState.role}
                         onChange={changeHandler}
                         >
-                    </input>
+                    </Form.Input>
                 </label>
-            <button >Add a team member</button>
-            </form>
+                </Form.Field>
+            <Button >Add a team member</Button>
+            </Form>
         </div>
      );
 }
  
-export default Form;
+export default MemberForm;

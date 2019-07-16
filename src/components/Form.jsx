@@ -5,7 +5,8 @@ const MemberForm = (props) => {
     const [formState, setFormState] = useState({
         name: '',
         email: '',
-        role: ''
+        role: '',
+        
     })
     const [member, newMember] = useState({
         name: '',
@@ -13,31 +14,45 @@ const MemberForm = (props) => {
         role: ''
     })
 
-    const addMember = event => {
+    const submitMember = event => {
         event.preventDefault()
-        props.addMember(formState)
+        if(props.memberToEdit)
+            props.edit(formState)
+        else
+            props.addMember(formState)
         setFormState({
             name: '',
             email: '',
-            role: ''
+            role: '',
+
         })
-        console.log("formState: ", formState)
     }
+
+    useEffect(() => {
+       if(props.memberToEdit) 
+            setFormState(props.memberToEdit)
+   }, [props.memberToEdit])
 
     const changeHandler = event => {
         setFormState({...formState, [event.target.name]: event.target.value })
     }
 
-    useEffect(() => {
-        props.memberToEdit(formState)
-    }, [])
+    const cancelEdit = () => {
+    setFormState({
+      name: '',
+      email: '',
+      role: ''
+    })
+    props.formReset()
+  }
+   
 
     console.log("member", props.memberToEdit)
 
     return ( 
         <div className="form-div">
             
-            <Form onSubmit={addMember} size="large">
+            <Form onSubmit={submitMember} size="large">
                 <Form.Field width="3">
                 <label>
                     Name: 
@@ -77,7 +92,8 @@ const MemberForm = (props) => {
                     </Form.Input>
                 </label>
                 </Form.Field>
-            <Button >Add a team member</Button>
+            {props.memberToEdit ? <Button >Edit a team member</Button> : <Button>Add a team member</Button>}
+            <Button onClick={cancelEdit}>Cancel Editing</Button>
             </Form>
         </div>
      );

@@ -10,33 +10,48 @@ function App() {
        {
             name: 'John Smith',
             email: 'john.smith@gmail.com',
-            role: 'Front-End Engineer'
+            role: 'Front-End Engineer',
+            index: 1 
         },
         {
             name: 'Samantha Smith',
             email: 'ssmith@gmail.com',
-            role: 'Back-End Engineer'
+            role: 'Back-End Engineer',
+            index: 2
         },
         {
             name: 'Jack Smith',
             email: 'jack.smith@gmail.com',
-            role: 'UX Designer'
-        }
+            role: 'UX Designer',
+            index: 3
+        } 
+      
   ])
 
   const [memberToEdit, setMemberToEdit] = useState('')
 
   const addMember = (member) => {
-    const newMember = [...teamMember, member]
-    addTeamMember(newMember)
+    // const newMember = [...teamMember, member]
+    addTeamMember([...teamMember, {...member, index: teamMember.length}])
     
   }
 
-
-
+  const editTeamMember = (editMember) => {
+    addTeamMember(teamMember.map(member => {
+      if(member.index === editMember.index)
+        return editMember
+          else
+        return member
+    }))
+  }
+     
+  const formReset = () => {
+    setMemberToEdit()
+  }
 
   console.log("team member", teamMember)
   console.log("edit", memberToEdit)
+  console.log("toggle", teamMember)
   return (
     <div className="App">
       
@@ -52,13 +67,13 @@ function App() {
               <p>Role: {member.role}</p>
             </Card.Description>
             </Card.Content>
-            <Button onClick={() => setMemberToEdit(memberToEdit)}>Edit Member</Button>
+            <Button onClick={() => setMemberToEdit(member)}>Edit Member</Button>
             </Card>
             </div>
         </div>
       })}</div>
       
-      <MemberForm addMember={addMember} memberToEdit={setMemberToEdit}/>
+      <MemberForm addMember={addMember} edit={editTeamMember} memberToEdit={memberToEdit} formReset={formReset}/>
     </div>
   );
 }
